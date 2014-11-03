@@ -164,4 +164,23 @@ if module.parent.isBinScript
 		outputDir: argv.output or './'
 		density: argv.density or 'mdpi'
 		verbose: !argv.quiet
-	svg2android.renderSvg argv._
+
+	glob = require 'glob'
+	async = require 'async'
+
+	cache = {}
+	matches = {}
+	async.eachSeries argv._,
+		(arg, done) ->
+			glob arg, {cache}, (err, files) ->
+				return done err if err?
+
+				(matches[file] = true) for file in files
+				done()
+
+		, (err) ->
+			return console.error err if err?
+
+			files = Object.keys matches
+
+			svg2android.renderSvg files
