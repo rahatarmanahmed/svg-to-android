@@ -7,17 +7,18 @@ argv = (require 'yargs')
 	.alias 'o', 'output'
 	.alias 'd', 'density'
 	.alias 'q', 'quiet'
+	.alias 'D', 'output-density'
 	.argv
 
 class Svg2Android
 	constructor: (opts) ->
-		{@outputDir, @verbose} = opts
+		{@outputDir, @verbose, outputDensity: @densities} = opts
 
 		# Base multiplier to figure out how to size everything
 		# Default is to assume mdpi
 		@baseMultiplier = @densityToMultiplier(opts.density) or 1
 
-		@densities = ['ldpi', 'mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
+		@densities ?= ['ldpi', 'mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
 
 	_log: (msg) -> console.log msg if @verbose
 
@@ -164,6 +165,9 @@ if module.parent.isBinScript
 		outputDir: argv.output or './'
 		density: argv.density or 'mdpi'
 		verbose: !argv.quiet
+		outputDensity:
+			if not argv['output-density']? then null
+			else [].concat argv['output-density']
 
 	glob = require 'glob'
 	async = require 'async'
