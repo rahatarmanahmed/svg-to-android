@@ -30,6 +30,26 @@ class Svg2Android
 			when 'xxhdpi' or 'xx' then 3
 			when 'xxxhdpi' or 'xxx' then 4
 
+	loadPhantom: ->
+		Q.fcall =>
+			if @ph? then @ph
+
+			else
+				deferred = Q.defer()
+
+				phantom.create (ph) =>
+					@ph = ph
+					deferred.resolve ph
+
+				, path: path.dirname(phantomPath)+'/'
+
+				deferred.promise
+
+	close: ->
+		if @ph?
+			@ph.exit()
+			@ph = null
+
 	# Renders given SVGs to output directory given in constructor
 	# Assuming the file at current size is the given density
 	# Argument can be a string path or array of paths
@@ -39,31 +59,33 @@ class Svg2Android
 		if input not instanceof Array
 			input = [input]
 		svgs = (fs.readFileSync(i).toString() for i in input)
+
 		# Render SVGs
-		phantom.create (ph) =>
+		@loadPhantom()
+
+		.then =>
 			svgPromises = []
 			for svg, i in svgs
 				@_log "Rendering #{input[i]}"
-				svgPromises.push @_renderAllDensities ph, svg, input[i]
-			Q.all svgPromises
-			.then ->
-				ph.exit();
+				svgPromises.push @_renderAllDensities svg, input[i]
 
-		, path: path.dirname(phantomPath)+'/'
+			Q.all svgPromises
+
+		.then => @close()
 
 	# Renders a single SVG into all densities
 	# Returns a promise when done rendering all densities
-	_renderAllDensities: (ph, content, inputPath) ->
+	_renderAllDensities: (content, inputPath) ->
 		densityPromises = []
 		for density in @densities
-			densityPromises.push @_renderDensity ph, content, inputPath, density
+			densityPromises.push @_renderDensity content, inputPath, density
 		return Q.all densityPromises
 
 	# Renders a single SVG at a single density
 	# Returns a promise when done rendering that density
-	_renderDensity: (ph, content, inputPath, density) ->
+	_renderDensity: (content, inputPath, density) ->
 		deferred = Q.defer()
-		ph.createPage (page) =>
+		@ph.createPage (page) =>
 			page.set 'onConsoleMessage', (msg) =>
 				console.log msg
 			page.set 'onError', (msg, stack) =>
@@ -142,4 +164,23 @@ if module.parent.isBinScript
 		outputDir: argv.output or './'
 		density: argv.density or 'mdpi'
 		verbose: !argv.quiet
-	svg2android.renderSvg argv._
+
+	glob = require 'glob'
+	async = require 'async'
+
+	cache = {}
+	matches = {}
+	async.eachSeries argv._,
+		(arg, done) ->
+			glob arg, {cache}, (err, files) ->
+				return done err if err?
+
+				(matches[file] = true) for file in files
+				done()
+
+		, (err) ->
+			return console.error err if err?
+
+			files = Object.keys matches
+
+			svg2android.renderSvg files
