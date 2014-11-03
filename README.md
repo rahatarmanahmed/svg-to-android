@@ -1,6 +1,6 @@
 # svg-to-android
 
-This is a cli tool that renders SVGs into appropriately sized Android drawable PNGs for every density from ldpi to xxxdpi.
+This is a cli tool that renders SVGs into appropriately sized Android drawable PNGs for different densities.
 
 ## Installation
 
@@ -18,6 +18,7 @@ To install from npm, run
  - `-q`: Makes the tool quiet; will not output to console
  - `-o outputDir`: Specify where to save the drawable-{density} folders. Defaults to current directory.
  - `-d density`: Specify what density the SVG is currently sized as. That is, the dimensions defined in the SVG will be considered to be the density you provide, and all other densities will be resized relative to that density. Defaults to mdpi.
+ - `-D outputDensity`: Specify which densities you want to render into. Use this option multiple times for multiple output densities. Defaults to all dpis from ldpi to xxxdpi.
 
 ### Module
 
