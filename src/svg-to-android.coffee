@@ -24,12 +24,12 @@ class Svg2Android
 
 	densityToMultiplier: (density) ->
 		switch density.toLowerCase()
-			when 'ldpi' or 'l' then 0.75
-			when 'mdpi' or 'm' then 1
-			when 'hdpi' or 'h' then 1.5
-			when 'xhdpi' or 'x' then 2
-			when 'xxhdpi' or 'xx' then 3
-			when 'xxxhdpi' or 'xxx' then 4
+			when 'ldpi', 'l' then 0.75
+			when 'mdpi', 'm' then 1
+			when 'hdpi', 'h' then 1.5
+			when 'xhdpi', 'x' then 2
+			when 'xxhdpi', 'xx' then 3
+			when 'xxxhdpi', 'xxx' then 4
 
 	loadPhantom: ->
 		Q.fcall =>
