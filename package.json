@@ -1,0 +1,24 @@
+{
+  "name": "svg-to-android",
+  "main": "bin/index.js",
+  "version": "0.0.1",
+  "description": "Renders SVGs to different density drawables for Android apps.",
+  "author": "Rahat Ahmed <rahatarmanahmed@gmail.com>",
+  "preferGlobal": "true",
+  "bin": {
+    "svg-to-android": "./bin/index.js"
+  },
+  "dependencies": {
+    "yargs": "1.3.2",
+    "phantom": "~0.7.0",
+    "q": "~1.0.1"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-coffee": "*",
+    "phantomjs": "~1.9.12"
+  },
+  "peerDependencies": {
+    "phantomjs": "~1.9.12"
+  }
+}
