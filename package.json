@@ -1,7 +1,7 @@
 {
   "name": "svg-to-android",
   "main": "bin/index.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Renders SVGs to different density drawables for Android apps.",
   "author": "Rahat Ahmed <rahatarmanahmed@gmail.com>",
   "preferGlobal": "true",

@@ -54,13 +54,10 @@ class Svg2Android
 	# Renders a single SVG into all densities
 	# Returns a promise when done rendering all densities
 	_renderAllDensities: (ph, content, inputPath) ->
-		deferred = Q.defer()
 		densityPromises = []
 		for density in @densities
 			densityPromises.push @_renderDensity ph, content, inputPath, density
-		Q.all densityPromises
-		.then deferred.resolve
-		return deferred.promise
+		return Q.all densityPromises
 
 	# Renders a single SVG at a single density
 	# Returns a promise when done rendering that density
