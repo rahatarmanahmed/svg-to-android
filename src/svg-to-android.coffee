@@ -8,6 +8,16 @@ argv = (require 'yargs')
 	.alias 'd', 'density'
 	.alias 'q', 'quiet'
 	.alias 'D', 'output-density'
+	.default 'd', 'mdpi'
+	.default 'D', 'mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi'
+	.default 'o', './'
+	.demand 1
+	.usage 'Render SVGs into all android density PNGs.\nUsage: $0 [-v] [-d inputDensity] [-D outputDensity] [-o outputDir] svg1 [svg2...]'
+	.example '$0 -o drawables/ big_dog.svg', 'Renders big_dog.svg into densities ldpi to xxxdpi in the drawables directory.'
+	.describe 'd', 'The density of the input svgs.'
+	.describe 'D', 'The output density to render as.'
+	.describe 'o', 'The output directory to write rendered files into.'
+	.describe 'q', 'Makes this tool run quietly.'
 	.argv
 
 class Svg2Android
@@ -161,13 +171,19 @@ class Svg2Android
 module.exports = Svg2Android
 
 if module.parent.isBinScript
+	outputDensity = null
+	if argv['output-density']? and argv['output-density'].length > 0
+		outputDensity = []
+		if argv['output-density'] instanceof Array
+			argv['output-density'].forEach (i) -> outputDensity = outputDensity.concat i.split ','
+		else
+			outputDensity = outputDensity.concat argv['output-density'].split ','
+
 	svg2android = new Svg2Android
 		outputDir: argv.output or './'
 		density: argv.density or 'mdpi'
 		verbose: !argv.quiet
-		outputDensity:
-			if not argv['output-density']? then null
-			else [].concat argv['output-density']
+		outputDensity: outputDensity
 
 	glob = require 'glob'
 	async = require 'async'
