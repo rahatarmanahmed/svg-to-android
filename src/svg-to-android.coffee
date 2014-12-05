@@ -136,18 +136,20 @@ class Svg2Android
 				if not width and not height
 					width = viewBoxWidth
 					height = viewBoxHeight
+			else
+				viewBoxWidth = width
+				viewBoxHeight = height
 
 			if not width
 				width = bbox.width
 			if not height
 				height = bbox.height
 
-			svg.setAttribute 'viewBox', "0 0 #{width} #{height}"
-
 			width *= multiplier
 			height *= multiplier
 			svg.setAttribute 'width', width
 			svg.setAttribute 'height', height
+			svg.setAttribute 'viewBox', "0 0 #{viewBoxWidth} #{viewBoxHeight}"
 
 			return {width, height, usesViewBox}
 		, (dimensions) ->
