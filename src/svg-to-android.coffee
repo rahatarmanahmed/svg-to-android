@@ -122,8 +122,8 @@ class Svg2Android
 		page.evaluate (multiplier) ->
 			svg = document.getElementsByTagName('svg')[0]
 			bbox = svg.getBoundingClientRect()
-			width = svg.getAttribute('width');
-			height = svg.getAttribute('height');
+			width = parseInt svg.getAttribute 'width';
+			height = parseInt svg.getAttribute 'height';
 			viewBoxWidth = svg.viewBox and svg.viewBox.animVal and svg.viewBox.animVal.width;
 			viewBoxHeight = svg.viewBox and svg.viewBox.animVal and svg.viewBox.animVal.height;
 			usesViewBox = viewBoxWidth and viewBoxHeight
