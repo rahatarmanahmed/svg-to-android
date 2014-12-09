@@ -102,15 +102,16 @@ class Svg2Android
 			page.set 'onError', (msg, stack) =>
 				console.error msg
 				console.error stack
-			page.set 'onLoadFinished',  =>
+			page.open inputPath,  =>
 				multiplier = @densityToMultiplier(density) / @baseMultiplier
 				@_setSvgDimensions page, multiplier
+
 				.then =>
+
 					outputDir = path.join @outputDir, "drawable-#{density}", path.basename(inputPath, '.svg')+'.png'
 					page.render outputDir, {format: 'png', quality: 100}, =>
 						@_log "\tRendered drawable-#{density} at #{outputDir}"
 						deferred.resolve()
-			page.set 'content', content
 		return deferred.promise
 
 	# Figures out the width of the SVG and resizes by a multiplier
@@ -120,7 +121,7 @@ class Svg2Android
 	_setSvgDimensions: (page, multiplier) ->
 		deferred = Q.defer();
 		page.evaluate (multiplier) ->
-			svg = document.getElementsByTagName('svg')[0]
+			svg = document.documentElement
 			bbox = svg.getBoundingClientRect()
 			width = parseInt svg.getAttribute 'width';
 			height = parseInt svg.getAttribute 'height';
@@ -158,8 +159,8 @@ class Svg2Android
 				height: dimensions.height
 			, =>
 				page.set 'clipRect',
-					top: 8
-					left: 8
+					top: 0
+					left: 0
 					width: dimensions.width
 					height: dimensions.height
 				, =>
