@@ -4,6 +4,10 @@
   "version": "0.0.9",
   "description": "Renders SVGs to different density drawables for Android apps.",
   "author": "Rahat Ahmed <rahatarmanahmed@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rahatarmanahmed/svg-to-android"
+  },
   "preferGlobal": "true",
   "bin": {
     "svg-to-android": "./bin/index.js"
