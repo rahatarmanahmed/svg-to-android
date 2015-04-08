@@ -23,8 +23,5 @@
     "grunt": "*",
     "grunt-contrib-coffee": "*",
     "phantomjs": "1.x"
-  },
-  "peerDependencies": {
-    "phantomjs": "1.x"
   }
 }
