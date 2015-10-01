@@ -1,3 +1,5 @@
+# This library is now obsolete due to the Gradle Android plugin 1.4.0, which will manage and automatically render your vector drawables for you.
+
 # svg-to-android
 
 This is a cli tool that renders SVGs into appropriately sized Android drawable PNGs for different densities.
