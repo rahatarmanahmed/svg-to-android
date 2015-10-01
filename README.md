@@ -1,4 +1,4 @@
-# This library is now obsolete due to the Gradle Android plugin 1.4.0, which will manage and automatically render your vector drawables for you.
+# This library is now obsolete due to the [Gradle Android plugin 1.4.0](http://android-developers.blogspot.com/2015/09/android-studio-14.html), which will manage and automatically render your vector drawables for you.
 
 # svg-to-android
 
