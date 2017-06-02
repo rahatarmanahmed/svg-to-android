@@ -13,15 +13,15 @@
     "svg-to-android": "./bin/index.js"
   },
   "dependencies": {
-    "yargs": "1.3.2",
-    "phantom": "~0.7.0",
-    "q": "~1.0.1",
-    "glob": "^4.0.6",
-    "async": "^0.9.0"
+    "yargs": "8.0.1",
+    "phantom": "~4.0.3",
+    "q": "~1.5.0",
+    "glob": "^7.1.2",
+    "async": "^2.4.1"
   },
   "devDependencies": {
     "grunt": "*",
     "grunt-contrib-coffee": "*",
-    "phantomjs": "1.x"
+    "phantomjs": "^2.1.7"
   }
 }
