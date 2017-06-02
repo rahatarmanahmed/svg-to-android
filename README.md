@@ -1,5 +1,7 @@
 # This library is now obsolete due to the [Gradle Android plugin 1.4.0](http://android-developers.blogspot.com/2015/09/android-studio-14.html), which will manage and automatically render your vector drawables for you.
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rahatarmanahmed/svg-to-android.svg)](https://greenkeeper.io/)
+
 # svg-to-android
 
 This is a cli tool that renders SVGs into appropriately sized Android drawable PNGs for different densities.
